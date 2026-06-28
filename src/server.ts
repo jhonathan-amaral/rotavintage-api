@@ -1,9 +1,20 @@
 import Fastify from 'fastify';
 import { serializerCompiler, validatorCompiler } from '@fastify/type-provider-zod';
 import { eventRoutes } from './modules/events/event.routes.js';
+import { carRoutes } from './modules/cars/cars.route.js';
 
 const app = Fastify({
-  logger: true
+  logger: {
+    transport:{
+      target: 'pino-pretty',
+      options: {
+        ignore: 'pid,hostname',
+        errorLikeObjectKeys: ['err', 'error'],
+        translateTime: 'HH:MM:ss Z',
+        colorize: true
+      }
+    }
+  }
 });
 
 app.setValidatorCompiler(validatorCompiler);
@@ -11,6 +22,7 @@ app.setSerializerCompiler(serializerCompiler);
 
  
 app.register(eventRoutes);
+app.register(carRoutes);
 
 const start = async () => {
   try {
