@@ -2,7 +2,7 @@ export interface IEvent {
     id?: string;
     name: string;
     description: string;
-    date: Date;
+    date?: Date;
     location: string;
 }
 

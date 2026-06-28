@@ -12,4 +12,4 @@ export class EventService {
         }
         return await this.eventRepository.createEvent(eventData);
     }
-}
+} 

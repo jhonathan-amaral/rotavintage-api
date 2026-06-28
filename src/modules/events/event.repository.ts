@@ -1,7 +1,7 @@
 import type {  IEvent } from "./types";
 
 export class EventRepository {
-    private eventsBank: IEvent[] = [];
+    private eventsBank: IEvent[] = [{"id":"150342.43589000273","name":"TEste","description":"Novo teste","location":"Cornelio"}];
     
     async getEventById(id: string): Promise<IEvent | undefined> {
         return this.eventsBank.find(event => event.id === id);
