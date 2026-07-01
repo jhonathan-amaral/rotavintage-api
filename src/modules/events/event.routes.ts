@@ -3,6 +3,7 @@ import { EventRepository } from "./event.repository";
 import { EventService } from "./event.service";
 import { EventController } from "./event.controller";
 import { AppError } from "../../shared/errors/app-erros";
+import { EventSchema } from "./types";
 
 export async function eventRoutes(app: FastifyInstance) : Promise<void>  {
     const eventRepository = new EventRepository()
@@ -21,5 +22,21 @@ export async function eventRoutes(app: FastifyInstance) : Promise<void>  {
         })
 
     })
-    app.post("/events", eventController.create);
+
+    app.post("/events", {
+        schema:{
+            body: EventSchema
+        }
+    }, eventController.create);
+    app.get("/events", eventController.getAllEvents.bind(eventController));
+    app.get("/events/:id",{
+        schema:{
+            params: EventSchema.pick({id:true})
+        }
+    }, eventController.getEventById.bind(eventController));
+    app.get("/events/slug/:slug", {
+        schema:{
+            params: EventSchema.pick({slug:true})
+        }
+    }, eventController.getEventSlug.bind(eventController));
 } 
